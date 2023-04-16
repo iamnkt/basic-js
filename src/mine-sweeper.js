@@ -23,9 +23,58 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  let field = matrix.slice(0);
+  let count = 1;
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j] === false) {
+        field[i][j] = 0;
+      }
+    }
+  }
+  for (let i = 0; i < field.length; i++) {
+    for (let j = 0; j < field[i].length; j++) {
+      if (field[i][j] === true) {
+        if (field[i - 1]) {
+          if (field[i - 1][j - 1] !== true && field[i - 1][j - 1] !== undefined) {
+            field[i - 1][j - 1] += count;
+          }
+          if (field[i - 1][j] !== true && field[i - 1][j] !== undefined) {
+            field[i - 1][j] += count;
+          }
+          if (field[i - 1][j + 1] !== true && field[i - 1][j + 1] !== undefined) {
+            field[i - 1][j + 1] += count;
+          }
+        }
+        if (field[i + 1]) {
+          if (field[i + 1][j - 1] !== true && field[i + 1][j - 1] !== undefined) {
+            field[i + 1][j - 1] += count;
+          }
+          if (field[i + 1][j] !== true && field[i + 1][j] !== undefined) {
+            field[i + 1][j] += count;
+          }
+          if (field[i + 1][j + 1] !== true && field[i + 1][j + 1] !== undefined) {
+            field[i + 1][j + 1] += count;
+          }
+        }
+        if (field[i][j - 1] !== true && field[i][j - 1] !== undefined) {
+          field[i][j - 1] += count;
+        }
+        if (field[i][j + 1] !== true && field[i][j + 1] !== undefined) {
+          field[i][j + 1] += count;
+        }
+      }
+    }
+  }
+  for (let i = 0; i < field.length; i++) {
+    for (let j = 0; j < field[i].length; j++) {
+      if (field[i][j] === true) {
+        field[i][j] = 1;
+      }
+    }
+  }
+  return field;
 }
 
 module.exports = {
